@@ -32,7 +32,25 @@ class Dataset():
         self.action_list = ['background', 'kick', 'subs', 'card', 'goal']
         self.num_classes = len(self.action_list)
         # self.weights는 클래스 개수에 맞게 조정해야 합니다.
-        self.weights = [1] * self.num_classes 
+        sample_counts = {
+            'class_0_other': 80218,
+            'class_1_set_piece': 17730,
+            'class_2_substitution': 2839,
+            'class_3_card': 2148,
+            'class_4_goal_shot': 7523
+        }
+        
+        # 샘플 수의 역수 계산
+        inverse_counts = [1.0 / sample_counts['class_0_other'],
+                          1.0 / sample_counts['class_1_set_piece'],
+                          1.0 / sample_counts['class_2_substitution'],
+                          1.0 / sample_counts['class_3_card'],
+                          1.0 / sample_counts['class_4_goal_shot']]
+        
+        # 가중치 정규화 (normalization)
+        sum_inverse = sum(inverse_counts)
+        self.weights = [x / sum_inverse for x in inverse_counts]
+
 
     def prepareDataset(self, path_data_train, path_data_valid, path_data_test, featureVideoName, featureAudioName, PCA):
         self.batch_dir = "Windows_size_{}_sec".format(self.window_size_sec)
