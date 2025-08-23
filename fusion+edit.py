@@ -68,6 +68,8 @@ class CrossModalGatedAttention(nn.Module):
     raise ValueError("input must be (B x D) or (B x N x D)")
 
   def forward(self, x_1, x_2):
+    z_i, z_j = self._ensure_3d(x_1), self._ensure_3d(x_2)
+    
     # each input: (B x N x D)
     # output:  (B x N x D)
     B_1, N_1, F_1 = x_1.shape
@@ -84,7 +86,6 @@ class CrossModalGatedAttention(nn.Module):
     feature_dim = F_1
 
     # (1) cross-attention > forget gate
-    z_i, z_j = self._ensure_3d(x_1), self._ensure_3d(x_2)
 
     qkv_i = self.qkv_i(z_i)# (B x N x 3D)
     qkv_j = self.qkv_j(z_j) # (B x N x 3D)
