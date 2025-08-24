@@ -803,3 +803,33 @@ class CMGAArchi3(nn.Module):
 
       return logits
 
+# ---
+# CMGAArchi4
+# early fusion # similar to AudioVideoArchi7 # more strictly following CMGA paper「Jiang, Ji(2022)」
+
+class CMGAArchi4(nn.Module): # CMGAArchi1 without VLAD Pooling
+    def __init__(self, dataset, network_type="RVLAD", VLAD_K=64, VLAD_gating=False, VLAD_batch_norm=True): # delete unused arguments if not cause error when removed <- all except dataset
+        super(CMGAArchi4, self).__init__()
+        torch.manual_seed(1234)
+        np.random.seed(1234)
+        random.seed(1234)
+
+        self.num_classes = dataset.num_classes
+        self.cmga = CrossModalGatedAttention(feature_dim=512, num_heads=8, dropout=0.2)
+        self.dropout = nn.Dropout(p=0.5)
+        self.fc = nn.Linear(512, self.num_classes) # 임시로 hard-coding
+
+    def forward(self, video_input, audio_input):
+      # each input: (B x N x D)
+      # output: (B x num_classes)
+
+      # Early Fusion | Cross-modality Gated Attention
+      fused_features = self.cmga(video_input, audio_input) # each input: (B x N x D) # ouptut: (B x N x D)
+      
+      # Simple mean pooling
+      x = fused_features.mean(dim=1) # (B x D)
+      x = self.dropout(x)
+      
+      logits = self.fc(x) # (B x num_classes)
+
+      return logits
