@@ -18,7 +18,7 @@ We define the problem as ① Classifying input chunks to events of interests fro
 
 ### 2. 데이터 Data
 
-모든 데이터셋은 사전학습 모델을 이용해 추출한 .npy 파일입니다(SoccerNet). 비디오 데이터에는 ResNet152가 오디오 데이터에는 VGGish가 이용되었으며, SoccerNet외의 데이터의 아래와 같은 전처리 과정을 거칩니다.  
+모든 데이터셋은 사전학습 모델을 이용해 추출한 .npy 파일입니다(SoccerNet). 비디오 데이터에는 ResNet152를 오디오 데이터에는 VGGish가 이용했고 raw data는 아래와 같이 전처리합니다. 
 
  ```
 Video -> ResNet152 -> TruncatedSVD -> compress feature dimension to 512
