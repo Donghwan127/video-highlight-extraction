@@ -48,7 +48,7 @@ With the given logits from encoder, decoder spot peaks and span spotted peaks wi
 
 
 <p align="center">
-  <img src="images/CMGAArchi2.png" alt="CMGA with late fusion" width="600"/>
+  <img src="images/CMGA.png" alt="CMGA with late fusion" width="600"/>
   <img src="images/GMU.png" alt="GMU with late fusion" width="600"/>
 </p>
 
