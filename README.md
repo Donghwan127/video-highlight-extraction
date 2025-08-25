@@ -1,14 +1,24 @@
 # video-highlight-extraction
-### 1. Introduction
+### 1. Project
+#### Introduction
 
 This project aims to generate video highlight from given video and audio of Soccer game. Base model is from Action-spotting model following [Vanderplaetes and Dupont (2020)](https://arxiv.org/abs/2011.04258) 
  and [its implementation](https://github.com/bastienvanderplaetse/SoccerNetMultimodalActionSpotting). 
  
-Major adaptations are as follows. (1) This project extends model's task from soloely spotting the action to **generating video highlights.** (2) It also **explored different fusion methods** including GMU, CMGA and transformer to effective process video and audion fusion. 
+Major adaptations are as follows. (1) This project handles **both actions spotting and generating video highlights** (2) It also **explores different fusion methods** including GMU, CMGA and transformer to effective process video and audion fusion. 
+
+#### Problem Definition
+① Classify input chunks to events of interests from a soccer game 
+
+② Spot the event as 'peak' using the threshold 
+
+③ Span the spotted event to generate video
+
 
 ### 2. Data
 
-All train, test, validation dataset are given as feature-extracted .npy files.
+All train, test, validation dataset are given as feature-extracted .npy files. Pretrained ResNet152 was used for video data and VGGish for audio. 
+
 For new input, data of each modality goes through the following procedure.
 
  ```
@@ -17,11 +27,22 @@ Video -> ResNet152 -> TruncatedSVD -> compress feature dimension to 512
  Audio -> VGGish -> PCA -> expand feature dimension to 512
 ```
 
+Additionally, data labels was re-preprocessed with new categorized class labels for the task. 
+Following is the events of interest. 
+```
+① goal # Shots on-target # Goal
+② Kick # penalty kick # Free kick # corner kick
+③ Subs 
+④ Card # yellow # red
+⑤ BG #background
+```
+ 
 
 ### 3. Architecture
 
-The base model from Vanderplaetes and Dupon (2020) employs early fusion by concatenating audio and video input right before the final FC. Refer to *Figure 1. Method 4*. 
+The base model from Vanderplaetes and Dupon (2020) employs early fusion by concatenating audio and video input right before the final FC. 
 
+![base model architecture](https://drive.google.com/file/d/1JT-EjD83zRg8eyvx55Hi32QAqt8f0QUl/view?usp=sharing)   
 
  
 #### Encoder
@@ -30,7 +51,10 @@ Main difference of our model from the base model is the method of fusion. We hav
 #### Decoder (Inference) 
 With the given logits from encoder, decoder spot peaks and span spotted peaks with pre-defined offsets to generate Highlights
 
-<Our model architecture 삽입>
+
+
+![CMGA with late fusion](https://drive.google.com/file/d/1WzlVFHBKVDKeZwWUoWEZVgEoFKFvfWJT/view?usp=sharing)   
+
 
 ### 4. Usage
 
