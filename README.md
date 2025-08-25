@@ -69,7 +69,7 @@ Ran experiments using different architectures, losses and weight control
 
 **Haejin Cho** | github
 
-Implemented and integrated Cross-Modality Gated Attention into the architecture with different moment of fusoin시기 !! 
+Implemented and integrated Cross-Modality Gated Attention into the architecture with different fusion strategies
 
 Implemented and integrated Attention Bottleneck into the architecture
 
