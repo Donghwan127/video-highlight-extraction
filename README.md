@@ -87,6 +87,13 @@ python ClassificationMinuteBased.py --architecture CMGAArchi2 --training listgam
 # inference
 bash run_inference.sh
 ```
+```
+# post-process (Generate High-light Video)
+ python3 post_process.py \
+  /mnt/d/workspace/KUBIG/features_video_fps/2_720p.mkv \    # raw video path
+  /mnt/d/workspace/KUBIG/video-highlight-extraction/inference_out/2_720p.json \   # path of inference output .json file
+  /mnt/d/workspace/KUBIG/video-highlight-extraction/inference_out/2_720p_highlights.mp4   # output path
+```
 
 ### 5. Code Structure
 ![Code Structure](images/codestructure.png)
