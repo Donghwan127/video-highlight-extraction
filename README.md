@@ -42,7 +42,7 @@ Following is the events of interest.
 
 The base model from Vanderplaetes and Dupon (2020) employs early fusion by concatenating audio and video input right before the final FC. 
 
-![base model architecture](https://drive.google.com/file/d/1JT-EjD83zRg8eyvx55Hi32QAqt8f0QUl/view?usp=sharing)   
+![base model architecture](images/basemodel.png)   
 
  
 #### Encoder
@@ -53,7 +53,7 @@ With the given logits from encoder, decoder spot peaks and span spotted peaks wi
 
 
 
-![CMGA with late fusion](https://drive.google.com/file/d/1WzlVFHBKVDKeZwWUoWEZVgEoFKFvfWJT/view?usp=sharing)   
+![CMGA with late fusion](images/CMGAArchi2.png)   
 
 
 ### 4. Usage
