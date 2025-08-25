@@ -6,9 +6,9 @@
 
 ### 1. 프로젝트 Project
 
-축구 경기 영상에서 하이라이트를 추출하는 멀티모달 모델입니다. 베이스 모델은 [Vanderplaetes and Dupont (2020)](https://arxiv.org/abs/2011.04258) 의 Action-spotting model로, 주요 차별점은 Action-spotting과 함께 비디오 하이라이트를 생성하는 것으로 모델 기능을 확장했다는 점, CMU, CMGA, Transformer encoder의 여러 fusion 방식을 실험한 점입니다. 
+축구 경기 영상에서 하이라이트를 추출하는 멀티모달 모델입니다. 베이스 모델은 [Vanderplaetes and Dupont (2020)](https://arxiv.org/abs/2011.04258) 의 Action-spotting model로, Action-spotting과 함께 비디오 하이라이트를 생성하는 것으로 모델 기능을 확장했다는 점과 CMU, CMGA, Transformer encoder의 여러 fusion 방식을 적용한 점이 주요 차별점입니다. 
 
-① 인풋을 경기 이벤트 라벨로 분류하고(Classification) ② 영상으로 만들 예측 하이라이트 순간을 찾아내고(Action-Spotting) ③ 찾아낸 이벤트로 영상을 만드는 것이 본 프로젝트의 goal입니다. 
+① 인풋을 경기 이벤트 라벨로 분류하고(Classification) ② 영상으로 만들 예측 하이라이트 순간을 찾아내고(Action-Spotting) ③ 찾아낸 이벤트로 영상을 만드는 것이 본 프로젝트의 문제입니다. 
 
 This project aims to generate video highlight from given video and audio of Soccer game. Base model is from Action-spotting model following [Vanderplaetes and Dupont (2020)](https://arxiv.org/abs/2011.04258) 
  and [its implementation](https://github.com/bastienvanderplaetse/SoccerNetMultimodalActionSpotting). Major adaptations are as follows. (1) This project handles **both actions spotting and generating video highlights** (2) It also **explores different fusion methods** including GMU, CMGA and transformer encoder to effective process video and audion fusion. 
@@ -18,7 +18,7 @@ We define the problem as ① Classifying input chunks to events of interests fro
 
 ### 2. 데이터 Data
 
-모든 데이터셋은 사전학습 모델을 이용해 추출한 .npy 파일입니다(SoccerNet). 비디오 데이터에는 ResNet152를 오디오 데이터에는 VGGish가 이용했고 raw data는 아래와 같이 전처리합니다. 
+모든 데이터셋은 SoccerNet 기반입니다. feature data는 사전학습 모델로 추출되었으며, 비디오 데이터에는 ResNet152가 오디오 데이터에는 VGGish가 이용되었습니다. raw data가 인풋으로 들어올 경우 아래와 같이 전처리합니다. 
 
  ```
 Video -> ResNet152 -> TruncatedSVD -> compress feature dimension to 512
@@ -26,18 +26,19 @@ Video -> ResNet152 -> TruncatedSVD -> compress feature dimension to 512
  Audio -> VGGish -> PCA -> expand feature dimension to 512
 ```
 
-또한 본 프로젝트의 task를 위해 데이터 라벨을 다음과 같이 새롭게 분류했습니다. 
+데이터 라벨을 기존 17개의 분류를 다음과 같이 새롭게 분류했습니다. 
 ```
 ① goal # Shots on-target # Goal
 ② Kick # penalty kick # Free kick # corner kick
 ③ Subs 
 ④ Card # yellow # red
 ⑤ BG #background
+# Discard # Pass # Throw-in # Kick-off # Shots off target # Ball out of play # Clearance # offisde # Foul # Drive
 ```
- 
-All train, test, validation dataset are given as feature-extracted .npy files(SoccerNet). Pretrained ResNet152 was used for video data and VGGish for audio. For new input, data of each modality goes through the following procedure.
 
-Additionally, data labels was re-preprocessed with new categorized class labels for the task. 
+All datasets are from SoccerNet. Features are extracted from pretrained models. ResNet152 was used for video data and VGGish for audio. For new input, data of each modality goes through the following procedure.
+
+Additionally, we have organized 17 labels into 4 classes for the task. 
 Following is the events of interest. 
 
 
@@ -49,10 +50,11 @@ Vanderplaetes and Dupon (2020)의 베이스 모델은 오디오와 비디오 인
 
  
 #### Encoder
-본 모델의 주요한 차별점은 fusion 방식입니다. 단순한 concatenation 대신 (1) GMU(Gated Multi-Modal Unit) to (2) CMGA(Cross-Modality Gated Attention) and (3) Transformer encoder 방식을 적용했습니다. 
+(1) GMU(Gated Multi-Modal Unit)
+(2) CMGA(Cross-Modality Gated Attention) (3) Transformer encoder 방식을 적용했습니다. 
 
 #### Decoder (Inference) 
-encoder에서 feed 받은 로짓값을 이용해 예측 하이라이트(peak)를 검출했으며 사전에 설정한 오프셋을 이용해 하이라이트 영상을 생성합니다. 
+encoder에서 받은 로짓을 이용해 예측 하이라이트(peak)를 검출하며 사전에 설정한 오프셋을 이용해 하이라이트 영상을 생성합니다. 
 
 
 <p align="center">
@@ -98,29 +100,4 @@ bash run_inference.sh
 
 [Giancola et al. (2018)](https://arxiv.org/abs/1804.04527). SoccerNet: A Scalable Dataset for Action Spottin in Soccer Videos.
 
----
-### 7. Contributors
 
-**Donghwan Seo** | github 
-
-Adapted base model source codes for highlight-generating task including adjusting class label and class weight while training 
-
-Ran experiments using different architectures, losses and weight control
-
-
-**Haejin Cho** | github
-
-Implemented and integrated Cross-Modality Gated Attention into the architecture with different fusion strategies
-
-Implemented and integrated Attention Bottleneck into the architecture
-
-**Haeun Jeon** | github
-
-Implemented and integrated Gated Modality Unit into the architecture
-
-implemented inference codes for highlight video generation.
-
-Ran experiments using different architectures, losses and weight control
-
----
-This project is part of [KUBIG](https://www.kubigkorea.com/)  2025 FALL contest. 
