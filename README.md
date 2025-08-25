@@ -35,9 +35,10 @@ Following is the events of interest.
 ### 3. Architecture
 
 The base model from Vanderplaetes and Dupon (2020) employs early fusion by concatenating audio and video input right before the final FC. 
- 
-<img src="images/basemodel.png" alt="base model architecture" width="600"/>
 
+<p align="center">
+<img src="images/basemodel.png" alt="base model architecture" width="600"/>
+</p>
  
 #### Encoder
 Main difference of our model from the base model is the method of fusion. We have explored different fusion methods from (1) GMU(Gated Multi-Modal Unit) to (2) CMGA(Cross-Modality Gated Attention) and (3) Transformer encoder instead of simple concatenation. 
