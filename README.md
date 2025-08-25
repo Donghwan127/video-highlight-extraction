@@ -1,15 +1,13 @@
 # video-highlight-extraction
-
 ### 1. Introduction
-본 프로젝트는 스포츠(축구) 경기 영상에서 비디오 하이라이트를 생성하는 모델을 개발합니다. 베이스 모델은 Vanderplaetes and Dupont (2020) 논문을 따릅니다.
+
 This project aims to generate video highlight from given video and audio of Soccer game. Base model is from Action-spotting model following [Vanderplaetes and Dupont (2020)](https://arxiv.org/abs/2011.04258) 
  and [its implementation](https://github.com/bastienvanderplaetse/SoccerNetMultimodalActionSpotting). 
  
-본 프로젝트는 (1) 경기 장면을 포착하는 것을 넘어 **하이라이트를 생성**하는 모델을 다룹니다. 또한 (2) GMU, CMGA, 트랜스포머 같은 fusion 전략을 실험했습니다. 
 Major adaptations are as follows. (1) This project extends model's task from soloely spotting the action to **generating video highlights.** (2) It also **explored different fusion methods** including GMU, CMGA and transformer to effective process video and audion fusion. 
 
 ### 2. Data
-모든 데이터셋은 피처가 추출된 .npy 파일을 이용했으며 새로운 인풋의 경우 다음과 같이 전처리 합니다. 
+
 All train, test, validation dataset are given as feature-extracted .npy files.
 For new input, data of each modality goes through the following procedure.
 
@@ -21,7 +19,7 @@ Video -> ResNet152 -> TruncatedSVD -> compress feature dimension to 512
 
 
 ### 3. Architecture
-베이스 모델은 최종 FC층 전에 오디오와 비디오 인풋을 단순 병렬 배치해 두 모달리티를 퓨전합니다. 
+
 The base model from Vanderplaetes and Dupon (2020) employs early fusion by concatenating audio and video input right before the final FC. Refer to *Figure 1. Method 4*. 
 
 
