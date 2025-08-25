@@ -45,7 +45,7 @@ Following is the events of interest.
 
 Vanderplaetes and Dupon (2020)의 베이스 모델은 오디오와 비디오 인풋을 최종 FC 레이어 직전에 early fusion한 구조입니다. 
  
-<img src="images/basemodel.png" alt="base model architecture" width="400"/>
+<img src="images/basemodel.png" alt="base model architecture" width="600"/>
 
  
 #### Encoder
@@ -56,8 +56,8 @@ encoder에서 feed 받은 로짓값을 이용해 예측 하이라이트(peak)를
 
 
 <p align="center">
-  <img src="images/CMGAArchi2.png" alt="CMGA with late fusion" width="400"/>
-  <img src="images/GMU.png" alt="GMU with late fusion" width="400"/>
+  <img src="images/CMGAArchi2.png" alt="CMGA with late fusion" width="600"/>
+  <img src="images/GMU.png" alt="GMU with late fusion" width="600"/>
 </p>
 
 
