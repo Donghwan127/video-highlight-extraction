@@ -1,4 +1,4 @@
-# video-highlight-extraction
+# :soccer: video-highlight-extraction
 
 21기 전하은 | 22기 서동환 조해진
 
