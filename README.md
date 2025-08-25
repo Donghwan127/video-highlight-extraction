@@ -8,18 +8,12 @@ This project aims to generate video highlight from given video and audio of Socc
 Major adaptations are as follows. (1) This project handles **both actions spotting and generating video highlights** (2) It also **explores different fusion methods** including GMU, CMGA and transformer encoder to effective process video and audion fusion. 
 
 #### Problem Definition
-① Classify input chunks to events of interests from a soccer game 
-
-② Spot the event as 'peak' using the threshold 
-
-③ Span the spotted event to generate video
+① Classify input chunks to events of interests from a soccer game ② Spot the event as 'peak' using the threshold ③ Span the spotted event to generate video
 
 
 ### 2. Data
 
-All train, test, validation dataset are given as feature-extracted .npy files. Pretrained ResNet152 was used for video data and VGGish for audio. 
-
-For new input, data of each modality goes through the following procedure.
+All train, test, validation dataset are given as feature-extracted .npy files. Pretrained ResNet152 was used for video data and VGGish for audio. For new input, data of each modality goes through the following procedure.
 
  ```
 Video -> ResNet152 -> TruncatedSVD -> compress feature dimension to 512
