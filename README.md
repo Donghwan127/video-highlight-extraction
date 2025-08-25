@@ -5,7 +5,7 @@
 This project aims to generate video highlight from given video and audio of Soccer game. Base model is from Action-spotting model following [Vanderplaetes and Dupont (2020)](https://arxiv.org/abs/2011.04258) 
  and [its implementation](https://github.com/bastienvanderplaetse/SoccerNetMultimodalActionSpotting). 
  
-Major adaptations are as follows. (1) This project handles **both actions spotting and generating video highlights** (2) It also **explores different fusion methods** including GMU, CMGA and transformer to effective process video and audion fusion. 
+Major adaptations are as follows. (1) This project handles **both actions spotting and generating video highlights** (2) It also **explores different fusion methods** including GMU, CMGA and transformer encoder to effective process video and audion fusion. 
 
 #### Problem Definition
 ① Classify input chunks to events of interests from a soccer game 
@@ -46,7 +46,7 @@ The base model from Vanderplaetes and Dupon (2020) employs early fusion by conca
 
  
 #### Encoder
-Main difference of our model from the base model is the method of fusion. We have explored different fusion methods from (1) GMU(Gated Multi-Modal Unit) to (2) CMGA(Cross-Modality Gated Attention) and (3) Transformer instead of simple concatenation. 
+Main difference of our model from the base model is the method of fusion. We have explored different fusion methods from (1) GMU(Gated Multi-Modal Unit) to (2) CMGA(Cross-Modality Gated Attention) and (3) Transformer encoder instead of simple concatenation. 
 
 #### Decoder (Inference) 
 With the given logits from encoder, decoder spot peaks and span spotted peaks with pre-defined offsets to generate Highlights
@@ -72,7 +72,10 @@ python ClassificationMinuteBased.py --architecture CMGAArchi2 --training listgam
 bash run_inference.sh
 ```
 
-### 5. References
+### 5. Code Structure
+![Code Structure](images/codestructure.png)
+
+### 6. References
 [Vaderplaestse and Dupont (2020)](https://arxiv.org/abs/2011.04258). Improved Soccer Action Spotting using both Audio and Video Streams
 
 [Jiang and Ji (2022)](https://arxiv.org/abs/2208.11893). Cross-Modality Gated Attention Fusion for Multimodal Sentiment Analysis. 
