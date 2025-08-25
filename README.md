@@ -1,14 +1,11 @@
 # video-highlight-extraction
 ### 1. Project
-#### Introduction
+
 
 This project aims to generate video highlight from given video and audio of Soccer game. Base model is from Action-spotting model following [Vanderplaetes and Dupont (2020)](https://arxiv.org/abs/2011.04258) 
- and [its implementation](https://github.com/bastienvanderplaetse/SoccerNetMultimodalActionSpotting). 
- 
-Major adaptations are as follows. (1) This project handles **both actions spotting and generating video highlights** (2) It also **explores different fusion methods** including GMU, CMGA and transformer encoder to effective process video and audion fusion. 
+ and [its implementation](https://github.com/bastienvanderplaetse/SoccerNetMultimodalActionSpotting). Major adaptations are as follows. (1) This project handles **both actions spotting and generating video highlights** (2) It also **explores different fusion methods** including GMU, CMGA and transformer encoder to effective process video and audion fusion. 
 
-#### Problem Definition
-① Classify input chunks to events of interests from a soccer game ② Spot the event as 'peak' using the threshold ③ Span the spotted event to generate video
+We define the problem as ① Classifying input chunks to events of interests from a soccer game ② Spotting the event as 'peak' using the threshold ③ Spanning the spotted event to generate video
 
 
 ### 2. Data
@@ -48,6 +45,7 @@ With the given logits from encoder, decoder spot peaks and span spotted peaks wi
 
 
 ![CMGA with late fusion](images/CMGAArchi2.png)   
+![GMU with late fusion](images/GMU.png)
 
 
 ### 4. Usage
